@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'v_tune_project.urls'
+ROOT_URLCONF = 'V_Tune.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'v_tune_project.wsgi.application'
+WSGI_APPLICATION = 'V_Tune.wsgi.application'
 
 
 # Database
