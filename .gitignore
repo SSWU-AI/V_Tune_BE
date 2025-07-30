@@ -1,0 +1,53 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django Database (SQLite, migrations)
+db.sqlite3
+*.sqlite3
+*.db
+
+# Django migrations (optional)
+**/migrations/
+!*/migrations/__init__.py
+
+# Python virtual environments
+venv/
+env/
+ENV/
+pyvenv.cfg
+
+# macOS system files
+.DS_Store
+
+# VSCode settings
+.vscode/
+
+# Environment variables (contains secrets like SECRET_KEY, DB info)
+.env
+.env.*
+
+# Settings override (if using local settings)
+settings_local.py
+config/settings/local.py
+
+# IDE / OS junk
+*.swp
+*~
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Static/media files (optional)
+staticfiles/
+media/
+
+# Gunicorn/PID/log/temp files
+*.log
+*.pid
+*.gz
+*.tmp
+
+# Render or Docker-specific (optional)
+*.render/
