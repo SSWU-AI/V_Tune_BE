@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: v-tune
+    name: V_Tune
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn V_Tune.wsgi:application
