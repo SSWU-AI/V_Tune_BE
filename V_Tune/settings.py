@@ -30,6 +30,9 @@ DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
+# TTS API 키
+GOOGLE_TTS_API_KEY = os.getenv("GOOGLE_TTS_API_KEY")
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -78,7 +81,7 @@ WSGI_APPLICATION = 'V_Tune.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'yoga_db.sqlite3',
     }
 }
 
