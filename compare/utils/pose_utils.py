@@ -42,33 +42,38 @@ def calculate_angle(a, b, c):
     angle = np.arccos(np.clip(cosine_angle, -1.0, 1.0))
     return np.degrees(angle)
 
-def compare_joint_angles(ref_pose, mapped_user_pose, user_pose):
+def compare_joint_angles(ref_pose, user_pose):
     joints_to_use = {
-        "LEFT_ELBOW": ("LEFT_SHOULDER", "LEFT_ELBOW", "LEFT_WRIST"),
-        "RIGHT_ELBOW": ("RIGHT_SHOULDER", "RIGHT_ELBOW", "RIGHT_WRIST"),
-        "LEFT_KNEE": ("LEFT_HIP", "LEFT_KNEE", "LEFT_ANKLE"),
-        "RIGHT_KNEE": ("RIGHT_HIP", "RIGHT_KNEE", "RIGHT_ANKLE"),
+        "LELBOW": ("LSHOULDER", "LELBOW", "LWRIST"),
+        "RELBOW": ("RSHOULDER", "RELBOW", "RWRIST"),
+        "LKNEE": ("LHIP", "LKNEE", "LANKLE"),
+        "RKNEE": ("RHIP", "RKNEE", "RANKLE"),
     }
 
     angle_result = {}
     angle_differences = {}
 
+    # ✅ 여기에 디버깅 추가
+    print("🧠 ref_pose keys:", list(ref_pose.keys()))
+    print("🧠 user_pose keys:", list(user_pose.keys()))
+
     for joint_name, (a, b, c) in joints_to_use.items():
         try:
-            print(f"🔍 Comparing: {a}, {b}, {c}")
+            print(f"🔍 Comparing angles for: {a}, {b}, {c}")
             ref_angle = calculate_angle(ref_pose[a], ref_pose[b], ref_pose[c])
-            user_angle = calculate_angle(user_pose[mapped_user_pose[a]],
-                                         user_pose[mapped_user_pose[b]],
-                                         user_pose[mapped_user_pose[c]])
+            user_angle = calculate_angle(user_pose[a], user_pose[b], user_pose[c])
         except KeyError as e:
-            return {"error": f"❌ KeyError: {e}"}, {}
+            print(f"❌ KeyError during angle calc for {joint_name}: {e}")
+            angle_result[joint_name] = False
+            angle_differences[joint_name] = None
+            continue
 
         if ref_angle is None or user_angle is None:
             angle_result[joint_name] = False
             angle_differences[joint_name] = None
         else:
             diff = abs(ref_angle - user_angle)
-            angle_result[joint_name] = diff < 15  # 허용 오차 범위
+            angle_result[joint_name] = diff < 15
             angle_differences[joint_name] = round(diff, 2)
 
     return angle_result, angle_differences

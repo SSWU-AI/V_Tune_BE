@@ -33,13 +33,22 @@ def compare_pose(request):
     try:
         ref_pose = eval(step.keypoints)
         ref_pose_norm = normalize_pose(ref_pose)
+
+        # ✅ 여기에 디버그 출력 추가
+        # 역매핑: MediaPipe → 요가 명칭
+        mediapipe_to_yoga = {v: k for k, v in yoga_to_mediapipe.items()}
+
+        # 입력값 변환
         mapped_user_pose = {
-            yoga_to_mediapipe[k]: v for k, v in user_keypoints_raw.items() if k in yoga_to_mediapipe
+            mediapipe_to_yoga[k]: v for k, v in user_keypoints_raw.items() if k in mediapipe_to_yoga
         }
+
+        print("🧾 원본 user_keypoints_raw:", user_keypoints_raw)
+        print("📍 mapped_user_pose:", mapped_user_pose)
+
         user_pose_norm = normalize_pose(mapped_user_pose)
-        angle_result, angle_differences = compare_joint_angles(
-            ref_pose_norm, mapped_user_pose, user_pose_norm
-        )
+
+        angle_result, angle_differences = compare_joint_angles(ref_pose_norm, user_pose_norm)
         joint_diff = calculate_joint_diff(ref_pose_norm, user_pose_norm)
 
         return Response({
