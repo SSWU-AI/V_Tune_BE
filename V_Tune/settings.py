@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'tts',
     'feedback',
     'rest_framework',
+    'data',
+    'compare',
 ]
 
 MIDDLEWARE = [
@@ -128,7 +130,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Render에서 static 파일 서빙용 설정
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # 개발 중 정적 파일 위치
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
