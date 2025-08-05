@@ -1,3 +1,5 @@
+# data/serializers.py
+
 from rest_framework import serializers
 from .models import Exercise, PoseStep
 
@@ -6,7 +8,7 @@ class ExerciseSerializer(serializers.ModelSerializer):
         model = Exercise
         fields = '__all__'
 
-class PosestepSerializer(serializers.ModelSerializer):
+class PoseStepSerializer(serializers.ModelSerializer):  # ✅ 대문자 S로 수정
     class Meta:
         model = PoseStep
         fields = '__all__'
