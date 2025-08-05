@@ -1,12 +1,11 @@
-import os
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponse
+from django.conf import settings
 import requests
 import base64
-from django.http import JsonResponse, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.conf import settings
 
 @csrf_exempt
-def tts_view(request):
+def tts_api(request):
     if request.method == 'POST':
         text = request.POST.get("text", "")
         if not text:
