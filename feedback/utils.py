@@ -1,6 +1,10 @@
 import openai
 import numpy as np
 
+# 🔑 OpenAI API 키 설정
+openai.api_key = "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"  # 마왕님의 실제 키로 유지하세요
+
+# ✅ 사용할 관절쌍 정의
 angle_joints = [
     ("LEFT_ELBOW", "LEFT_SHOULDER", "LEFT_WRIST"),
     ("RIGHT_ELBOW", "RIGHT_SHOULDER", "RIGHT_WRIST"),
@@ -13,6 +17,7 @@ angle_joints = [
     ("NOSE", "LEFT_SHOULDER", "RIGHT_SHOULDER")
 ]
 
+# ✅ 관절 한글 이름 매핑
 joint_name_map = {
     "LEFT_ELBOW": "왼쪽 팔꿈치", "RIGHT_ELBOW": "오른쪽 팔꿈치",
     "LEFT_SHOULDER": "왼쪽 어깨", "RIGHT_SHOULDER": "오른쪽 어깨",
@@ -21,10 +26,7 @@ joint_name_map = {
     "NECK": "목"
 }
 
-# OpenAI API key 
-client = openai.OpenAI(api_key="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")
-
-
+# ✅ 각도 계산 함수
 def calculate_angle(a, b, c):
     a, b, c = np.array(a), np.array(b), np.array(c)
     ba = a - b
@@ -32,7 +34,7 @@ def calculate_angle(a, b, c):
     cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc) + 1e-6)
     return np.degrees(np.arccos(np.clip(cosine_angle, -1.0, 1.0)))
 
-
+# ✅ 관절별 각도 차이 계산
 def get_joint_angle_differences(ref_pose, user_pose):
     angle_diffs = {}
     for center, a, b in angle_joints:
@@ -44,8 +46,8 @@ def get_joint_angle_differences(ref_pose, user_pose):
             angle_diffs[center] = None
     return angle_diffs
 
-
-def build_prompt_with_pose_feedback(joint_names, angle_differences, threshold=15): #false일때 feedback
+# ✅ 피드백 프롬프트 생성 (자세가 맞지 않을 때)
+def build_prompt_with_pose_feedback(joint_names, angle_differences, threshold=15):
     feedback_parts = []
     for joint, diff in zip(joint_names, angle_differences):
         if diff is not None and diff > threshold:
@@ -74,7 +76,7 @@ def build_prompt_with_pose_feedback(joint_names, angle_differences, threshold=15
 이제 사용자에게 피드백을 작성해 주세요.
 """
 
-
+# ✅ 칭찬 프롬프트 생성 (자세가 정확할 때)
 def build_simple_praise_prompt():
     return """
 당신은 피트니스 앱의 AI 코치입니다. 사용자의 현재 자세는 기준 자세와 거의 일치합니다.
@@ -89,11 +91,11 @@ def build_simple_praise_prompt():
 예시: “몸의 균형이 아주 잘 잡혀 있어요, 그대로만 유지해보세요!”
 """
 
-
+# ✅ GPT 호출 함수 (v0.28 대응)
 def query_gpt(prompt, model="gpt-4o"):
-    response = client.chat.completions.create(
+    response = openai.ChatCompletion.create(
         model=model,
         messages=[{"role": "user", "content": prompt}],
         temperature=0.7
     )
-    return response.choices[0].message.content
+    return response.choices[0].message["content"]
