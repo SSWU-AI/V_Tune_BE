@@ -1,8 +1,13 @@
 import openai
 import numpy as np
+import os
+from dotenv import load_dotenv
 
-# 🔑 OpenAI API 키 설정
-openai.api_key = "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"  # 마왕님의 실제 키로 유지하세요
+# .env 파일 로드
+load_dotenv()
+
+# 환경변수에서 API 키 불러오기
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # ✅ 사용할 관절쌍 정의
 angle_joints = [

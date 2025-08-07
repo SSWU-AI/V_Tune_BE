@@ -16,28 +16,15 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-<<<<<<< Updated upstream
     # 기본 경로에서 텍스트 응답
     path('', lambda request: HttpResponse("배포가 완료되었습니다. /swagger/ 에서 API 문서를 확인하세요.")),
 
     path('admin/', admin.site.urls),
     path('api/data/', include('data.urls')), 
-=======
-    # ✅ API 경로 (구체적인 순서대로)
-    path('api/routines/', include('routines.urls')),
-    path('api/data/', include('data.urls')),
->>>>>>> Stashed changes
     path('api/feedback/', include('feedback.urls')),
     path('api/compare/', include('compare.urls')),
     path('api/tts/', include('tts.urls')),
 
-<<<<<<< Updated upstream
-=======
-    # ✅ Admin
-    path('admin/', admin.site.urls),
-
-    # ✅ Swagger / Redoc 문서
->>>>>>> Stashed changes
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
