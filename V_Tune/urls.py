@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/feedback/', include('feedback.urls')),
     path('api/compare/', include('compare.urls')),
     path('api/tts/', include('tts.urls')),
+    path('api/routines/', include('routines.urls')),
 
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
