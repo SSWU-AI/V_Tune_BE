@@ -73,7 +73,7 @@ def compare_joint_angles(ref_pose, user_pose):
             angle_differences[joint_name] = None
         else:
             diff = abs(ref_angle - user_angle)
-            angle_result[joint_name] = diff < 15
+            angle_result[joint_name] = diff < 60
             angle_differences[joint_name] = round(diff, 2)
 
     return angle_result, angle_differences
