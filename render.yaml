@@ -1,6 +1,9 @@
 services:
   - type: web
-    name: v-tune
+    name: V_Tune
     env: python
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    startCommand: gunicorn v_tune_project.wsgi:application
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash -c "python manage.py migrate && gunicorn V_Tune.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: V_Tune.settings
