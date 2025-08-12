@@ -70,10 +70,10 @@ def compare_joint_angles(ref_pose, user_pose):
 
         if ref_angle is None or user_angle is None:
             angle_result[joint_name] = False
-            angle_differences[joint_name] = None
+            angle_differences[joint_name] = None 
         else:
             diff = abs(ref_angle - user_angle)
-            angle_result[joint_name] = diff < 100
+            angle_result[joint_name] = diff < 40
             angle_differences[joint_name] = round(diff, 2)
 
     return angle_result, angle_differences
